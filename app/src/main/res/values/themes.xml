@@ -1,9 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.WakeUp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.WakeUp" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Main colors -->
+        <item name="colorPrimary">@color/deep_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/bright_red</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">@color/background_black</item>
+        <item name="android:statusBarColor">@color/background_black</item>
+        <item name="android:navigationBarColor">@color/background_black</item>
     </style>
 
     <style name="Theme.WakeUp" parent="Base.Theme.WakeUp" />
+
+    <!-- Fullscreen Alarm Theme -->
+    <style name="Theme.WakeUp.Fullscreen" parent="Theme.WakeUp">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowShowWhenLocked">true</item>
+        <item name="android:windowTurnScreenOn">true</item>
+        <item name="android:windowKeepScreenOn">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
 </resources>

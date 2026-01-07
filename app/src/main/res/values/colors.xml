@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Aggressive Red Theme -->
+    <color name="deep_red">#B71C1C</color>
+    <color name="bright_red">#F44336</color>
+    <color name="dark_grey">#212121</color>
+    <color name="background_black">#000000</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#FFCDD2</color>
 </resources>
