@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_red"
+    android:padding="24dp"
+    tools:context=".AlarmActivity">
+
+    <!-- Digital Clock -->
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:format12Hour="hh:mm"
+        android:format24Hour="HH:mm"
+        android:textColor="@color/white"
+        android:textSize="84sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toTopOf="parent" />
+
+    <!-- Challenge Instructions -->
+    <TextView
+        android:id="@+id/tvInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TYPE THE TEXT BELOW TO STOP"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toBottomOf="@id/textClock" />
+
+    <!-- The Challenge Text -->
+    <TextView
+        android:id="@+id/tvChallenge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/challenge_bg"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="The quick brown fox jumps over the lazy dog and wakes up early for success."
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toBottomOf="@id/tvInstructions" />
+
+    <!-- Input Area -->
+    <EditText
+        android:id="@+id/etChallengeInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/input_bg"
+        android:gravity="top|start"
+        android:hint="Type here..."
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:padding="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="#CCFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_top_toBottomOf="@id/tvChallenge" />
+
+    <!-- Stop Button -->
+    <Button
+        android:id="@+id/btnStopAlarm"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/black"
+        android:enabled="false"
+        android:text="STOP ALARM"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
