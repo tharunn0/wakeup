@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.tharun.wakeup.audio.AlarmAudioController
 import com.tharun.wakeup.databinding.ActivityAlarmBinding
 import com.tharun.wakeup.util.TextChallengeGenerator
 
@@ -17,6 +19,7 @@ class AlarmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlarmBinding
     private val challengeGenerator = TextChallengeGenerator()
     private lateinit var currentChallenge: String
+    private lateinit var audioController: AlarmAudioController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         showWhenLockedAndTurnScreenOn()
@@ -25,9 +28,14 @@ class AlarmActivity : AppCompatActivity() {
         binding = ActivityAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        audioController = AlarmAudioController(this)
+        
         setupChallenge()
         setupListeners()
         disableBackButton()
+        
+        // Ensure volume is max when activity starts
+        audioController.ensureMaxVolume()
     }
 
     private fun showWhenLockedAndTurnScreenOn() {
@@ -37,6 +45,7 @@ class AlarmActivity : AppCompatActivity() {
             val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
             keyguardManager.requestDismissKeyguard(this, null)
         } else {
+            @Suppress("DEPRECATION")
             window.addFlags(
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                         or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -54,12 +63,19 @@ class AlarmActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.etChallengeInput.addTextChangedListener { text ->
-            val isMatch = challengeGenerator.isMatch(text.toString(), currentChallenge)
+            val input = text.toString()
+            val isMatch = challengeGenerator.isMatch(input, currentChallenge)
+            
             binding.btnStopAlarm.isEnabled = isMatch
+            
             if (isMatch) {
                 binding.btnStopAlarm.setBackgroundColor(getColor(R.color.bright_red))
+                binding.tvInstructions.text = "CHALLENGE COMPLETE!"
+                binding.tvInstructions.setTextColor(getColor(R.color.white))
             } else {
                 binding.btnStopAlarm.setBackgroundColor(getColor(R.color.black))
+                binding.tvInstructions.text = "TYPE THE TEXT BELOW TO STOP"
+                binding.tvInstructions.setTextColor(getColor(R.color.text_secondary))
             }
         }
 
@@ -83,9 +99,17 @@ class AlarmActivity : AppCompatActivity() {
         })
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // Intercept volume keys to prevent silencing
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            audioController.ensureMaxVolume()
+            return true // Consume the event
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     override fun onUserLeaveHint() {
-        // This is called when Home or Recent Apps is pressed.
-        // We can't prevent it, but we can bring the activity back to front.
+        // Attempt to bring the activity back if the user tries to escape via Home/Recents
         super.onUserLeaveHint()
         val intent = Intent(this, AlarmActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
