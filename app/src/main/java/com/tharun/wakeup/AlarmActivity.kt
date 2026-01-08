@@ -70,11 +70,11 @@ class AlarmActivity : AppCompatActivity() {
             
             if (isMatch) {
                 binding.btnStopAlarm.setBackgroundColor(getColor(R.color.bright_red))
-                binding.tvInstructions.text = "CHALLENGE COMPLETE!"
+                binding.tvInstructions.text = getString(R.string.challenge_complete)
                 binding.tvInstructions.setTextColor(getColor(R.color.white))
             } else {
                 binding.btnStopAlarm.setBackgroundColor(getColor(R.color.black))
-                binding.tvInstructions.text = "TYPE THE TEXT BELOW TO STOP"
+                binding.tvInstructions.text = getString(R.string.type_text_below)
                 binding.tvInstructions.setTextColor(getColor(R.color.text_secondary))
             }
         }
@@ -106,13 +106,5 @@ class AlarmActivity : AppCompatActivity() {
             return true // Consume the event
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onUserLeaveHint() {
-        // Attempt to bring the activity back if the user tries to escape via Home/Recents
-        super.onUserLeaveHint()
-        val intent = Intent(this, AlarmActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-        startActivity(intent)
     }
 }

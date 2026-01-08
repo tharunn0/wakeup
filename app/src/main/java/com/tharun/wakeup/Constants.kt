@@ -5,11 +5,6 @@ object Constants {
     const val ACTION_START_ALARM = "com.tharun.wakeup.ACTION_START_ALARM"
     const val ACTION_STOP_ALARM = "com.tharun.wakeup.ACTION_STOP_ALARM"
 
-    // Intent Extras
-    const val EXTRA_ALARM_TIME = "extra_alarm_time"
-    const val EXTRA_RINGTONE_URI = "extra_ringtone_uri"
-    const val EXTRA_VOLUME = "extra_volume"
-
     // Request Codes
     const val REQUEST_CODE_ALARM = 1001
     const val REQUEST_CODE_FULL_SCREEN_INTENT = 1002
@@ -24,10 +19,6 @@ object Constants {
     const val PREF_ALARM_TIME = "pref_alarm_time"
     const val PREF_RINGTONE_URI = "pref_ringtone_uri"
     const val PREF_VOLUME = "pref_volume"
+    const val PREF_IS_FIRST_RUN = "pref_is_first_run"
+    const val PREF_ORIGINAL_VOLUME = "pref_original_volume"
 }
-
-data class AlarmSettings(
-    val timeInMillis: Long,
-    val ringtoneUri: String,
-    val volume: Int
-)

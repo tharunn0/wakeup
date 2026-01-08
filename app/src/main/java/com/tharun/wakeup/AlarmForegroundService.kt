@@ -32,13 +32,7 @@ class AlarmForegroundService : Service() {
             // 2. Start MediaPlayer loop
             audioController.start(null)
             
-            // 3. Explicitly start AlarmActivity to ensure it shows immediately
-            val activityIntent = Intent(this, AlarmActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            }
-            startActivity(activityIntent)
-            
+            // 3. Activity will be started via fullScreenIntent in the notification
         } else if (action == Constants.ACTION_STOP_ALARM) {
             // 4. Handle stop command from activity
             audioController.stop()
@@ -68,8 +62,8 @@ class AlarmForegroundService : Service() {
 
         return NotificationCompat.Builder(this, Constants.CHANNEL_ID_ALARM)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("ALARM ACTIVE")
-            .setContentText("Complete the challenge to stop the alarm.")
+            .setContentTitle(getString(R.string.alarm_active))
+            .setContentText(getString(R.string.complete_challenge_stop))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setFullScreenIntent(fullScreenPendingIntent, true)

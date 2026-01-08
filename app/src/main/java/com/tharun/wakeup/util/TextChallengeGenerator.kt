@@ -13,7 +13,17 @@ class TextChallengeGenerator {
         "every", "morning", "is", "a", "new", "chance", "wake", "up",
         "and", "shine", "your", "future", "self", "will", "thank", "you",
         "consistency", "effort", "growth", "strength", "courage", "vision",
-        "today", "is", "the", "day", "make", "it", "count", "never", "give", "up"
+        "today", "is", "the", "day", "make", "it", "count", "never", "give", "up",
+        "abundance", "achievement", "adventure", "ambition", "appreciation",
+        "balance", "belief", "bravery", "brilliance", "celebration",
+        "character", "clarity", "commitment", "compassion", "confidence",
+        "contribution", "creativity", "curiosity", "dedication", "determination",
+        "empathy", "enthusiasm", "excellence", "exploration", "faith",
+        "flexibility", "focus", "forgiveness", "generosity", "gratitude",
+        "harmony", "honesty", "hope", "imagination", "independence",
+        "integrity", "intuition", "joy", "kindness", "leadership",
+        "learning", "loyalty", "motivation", "optimism", "passion",
+        "patience", "peace", "perseverance", "positivity", "purpose"
     )
 
     private val random = Random()
@@ -26,16 +36,20 @@ class TextChallengeGenerator {
         val challengeWords = mutableListOf<String>()
         
         repeat(length) {
-            challengeWords.add(wordPool[random.nextInt(wordPool.size)])
+            if (random.nextInt(10) > 7) { // 20% chance of a random number string
+                challengeWords.add(random.nextInt(1000).toString())
+            } else {
+                challengeWords.add(wordPool[random.nextInt(wordPool.size)])
+            }
         }
         
         return challengeWords.joinToString(" ")
     }
 
     /**
-     * Checks if the user input matches the challenge exactly (case-sensitive).
+     * Checks if the user input matches the challenge exactly (case-insensitive).
      */
     fun isMatch(input: String, challenge: String): Boolean {
-        return input.trim() == challenge.trim()
+        return input.trim().equals(challenge.trim(), ignoreCase = true)
     }
 }

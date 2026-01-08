@@ -8,15 +8,16 @@ import android.os.Build
 import android.provider.Settings
 import com.tharun.wakeup.AlarmReceiver
 import com.tharun.wakeup.Constants
+import com.tharun.wakeup.R
 
 class AlarmScheduler(private val context: Context) {
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    fun scheduleAlarm(timeInMillis: Long) {
+    fun scheduleAlarm(timeInMillis: Long): Boolean {
         if (!canScheduleExactAlarms()) {
             requestExactAlarmPermission()
-            return
+            return false
         }
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -33,6 +34,7 @@ class AlarmScheduler(private val context: Context) {
         alarmManager.setAlarmClock(alarmClockInfo, pendingIntent)
 
         saveAlarmTime(timeInMillis)
+        return true
     }
 
     fun cancelAlarm() {
@@ -57,6 +59,7 @@ class AlarmScheduler(private val context: Context) {
 
     private fun requestExactAlarmPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            android.widget.Toast.makeText(context, context.getString(R.string.exact_alarm_perm_required), android.widget.Toast.LENGTH_LONG).show()
             val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)

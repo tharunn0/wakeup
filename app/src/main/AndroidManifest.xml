@@ -4,7 +4,7 @@
 
     <!-- Permissions for Alarms and Services -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" /> <!-- For Android 14+ if applicable, though SCHEDULE_EXACT_ALARM is usually enough for user-facing apps -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:allowBackup="true"
@@ -33,6 +34,11 @@
             </intent-filter>
         </activity>
 
+        <!-- Critical Setup Instructions -->
+        <activity
+            android:name=".InstructionsActivity"
+            android:exported="false" />
+
         <!-- Alarm Ringing Screen -->
         <activity
             android:name=".AlarmActivity"
@@ -41,7 +47,8 @@
             android:turnScreenOn="true"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.WakeUp.Fullscreen" />
 
         <!-- Service for Audio Playback -->
         <service
